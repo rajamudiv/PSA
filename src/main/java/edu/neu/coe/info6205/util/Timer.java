@@ -4,6 +4,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
+import java.util.concurrent.TimeUnit;
 
 public class Timer {
 
@@ -55,7 +56,22 @@ public class Timer {
     public <T, U> double repeat(int n, Supplier<T> supplier, Function<T, U> function, UnaryOperator<T> preFunction, Consumer<U> postFunction) {
         logger.trace("repeat: with " + n + " runs");
         // TO BE IMPLEMENTED: note that the timer is running when this method is called and should still be running when it returns.
-        return 0;
+        for (int i = 0; i < n; i++) {
+            pause();
+            if(preFunction != null) {
+                preFunction.apply(supplier.get());
+            }
+            resume();
+            U uu = function.apply(supplier.get());
+            lap();
+            pause();
+            if(postFunction != null) {
+                postFunction.accept(uu);
+            }
+            resume();
+        }
+        pause();
+        return meanLapTime();
     }
 
     /**
@@ -174,7 +190,8 @@ public class Timer {
      */
     private static long getClock() {
         // TO BE IMPLEMENTED
-        return 0;
+        long sysTime = System.nanoTime();
+        return sysTime;
     }
 
     /**
@@ -186,7 +203,8 @@ public class Timer {
      */
     private static double toMillisecs(long ticks) {
         // TO BE IMPLEMENTED
-        return 0;
+        ticks = TimeUnit.NANOSECONDS.toMillis(ticks);
+        return ticks;
     }
 
     final static LazyLogger logger = new LazyLogger(Timer.class);
