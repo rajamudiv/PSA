@@ -30,7 +30,7 @@ public class MSDStringSort {
     private static void sort(String[] a, int lo, int hi, int d) {
         if (hi < lo + cutoff) InsertionSortMSD.sort(a, lo, hi, d);
         else {
-            int[] count = new int[radix + 2];        // Compute frequency counts.
+            int[] count = new int[radix+2];        // Compute frequency counts.
             for (int i = lo; i < hi; i++)
                 count[charAt(a[i], d) + 2]++;
             for (int r = 0; r < radix + 1; r++)      // Transform counts to indices.
@@ -41,6 +41,9 @@ public class MSDStringSort {
             if (hi - lo >= 0) System.arraycopy(aux, 0, a, lo, hi - lo);
             // Recursively sort for each character value.
             // TO BE IMPLEMENTED
+            for (int r = 0; r < radix; r++){
+                sort(a, lo + count[r], lo + count[r+1] - 1, d+1);
+            }
         }
     }
 
@@ -49,7 +52,7 @@ public class MSDStringSort {
         else return -1;
     }
 
-    private static final int radix = 256;
+    private static final int radix = 478;
     private static final int cutoff = 15;
     private static String[] aux;       // auxiliary array for distribution
 }

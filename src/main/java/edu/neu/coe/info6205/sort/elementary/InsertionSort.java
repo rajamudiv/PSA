@@ -4,10 +4,6 @@ import edu.neu.coe.info6205.sort.BaseHelper;
 import edu.neu.coe.info6205.sort.Helper;
 import edu.neu.coe.info6205.sort.SortWithHelper;
 import edu.neu.coe.info6205.util.Config;
-import edu.neu.coe.info6205.util.Timer;
-
-import java.util.*;
-import java.util.stream.Stream;
 
 public class InsertionSort<X extends Comparable<X>> extends SortWithHelper<X> {
 
@@ -67,6 +63,7 @@ public class InsertionSort<X extends Comparable<X>> extends SortWithHelper<X> {
                 ii = ii-1;
             }
         }
+        //System.out.println();
     }
     /*public static void main(String[] args) {
         Random rd = new Random(); // creating Random object
